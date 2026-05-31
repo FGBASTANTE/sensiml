@@ -442,7 +442,7 @@ def sobol_second_order(final_model, X, n_samples=2048, conf_level=0.95, bounds_p
 # VISUALIZACIÓN
 # =============================================================================
 
-def sobol_plot(sobol_df, threshold_ST=0.05, conf_level=0.95, save_path=None):
+def sobol_plot(sobol_df, threshold_ST=0.05, conf_level=0.95, save_path=None, show=True):
     """Visualiza S1 y ST como barras horizontales apiladas."""
     if sobol_df.empty:
         warnings.warn("El DataFrame de Sobol está vacío.")
@@ -483,11 +483,12 @@ def sobol_plot(sobol_df, threshold_ST=0.05, conf_level=0.95, save_path=None):
 
     if save_path is not None:
         plt.savefig(save_path, dpi=150, bbox_inches="tight")
-    plt.show()
+    if show:
+        plt.show()
     return fig, ax
 
 
-def sobol_interaction_heatmap(s2_df, threshold_S2=0.0, save_path=None):
+def sobol_interaction_heatmap(s2_df, threshold_S2=0.0, save_path=None, show=True):
     """Visualiza los índices S2 como mapa de calor de forma segura frente a filtrados estrictos o vacíos."""
     # Reparación del crash: Manejo seguro si no quedan datos que mostrar por filtrado extremo
     if s2_df.empty:
@@ -545,7 +546,8 @@ def sobol_interaction_heatmap(s2_df, threshold_S2=0.0, save_path=None):
 
     if save_path is not None:
         plt.savefig(save_path, dpi=150, bbox_inches="tight")
-    plt.show()
+    if show:
+        plt.show()
     return fig, ax
 
 
@@ -1012,6 +1014,9 @@ def conditional_shapley_effects(
     # ------------------------------------------------------------------
     # Validaciones defensivas
     # ------------------------------------------------------------------
+    _VALID_APPROACHES = {"gaussian", "copula", "empirical"}
+    if approach not in _VALID_APPROACHES:
+        raise ValueError(f"approach='{approach}' no válido. Opciones: {_VALID_APPROACHES}")
     if not isinstance(final_model, Pipeline):
         raise TypeError("final_model debe ser un sklearn.pipeline.Pipeline entrenado.")
     if not isinstance(X_train, pd.DataFrame):
