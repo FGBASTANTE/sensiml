@@ -46,4 +46,4 @@ sss.plot_shapley_effects(shap_exp)
 
 
 Este código está orientado a usuarios con experiencia en: análisis de sensibilidad, interpretabilidad ML, estadística multivariante, pipelines sklearn/XGBoost...
-No se recomienda su uso como herramienta “plug-and-play” sin comprender las hipótesis estadísticas y las limitaciones metodológicas de cada técnica y las derivadas de su implemetación.
+No se recomienda su uso como herramienta “plug-and-play” sin comprender las hipótesis estadísticas y las limitaciones metodológicas de cada técnica y las derivadas de su implementación.
